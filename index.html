@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Rock Paper Sissor - MultiPlayer</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="jumbotron jumbotron-fluid py-4" id="header">
+            <h1 class="display-4"><i class="far fa-clock"></i> <b>Rock Paper Sissors</b></h1>
+        </div>
+        <div id="chatBox">
+            <form>
+                <div class="form-group actionButtons">
+                    <input type="text" class="form-control-sm" id="chatInput" placeholder="Chat it up!">
+                    <div class="btn-group">
+                        <button type="submit" id="chatButton" value="send" class="btn btn-sm">Send</button>
+                    </div>
+                </div>
+            </form>
+            <div id="chatArea">
+
+            </div>
+        </div>
+    </div>
+
+
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+<script src="https://www.gstatic.com/firebasejs/5.0.0/firebase.js"></script>
+<script src="assets/javascript/game.js"></script>
+</html>

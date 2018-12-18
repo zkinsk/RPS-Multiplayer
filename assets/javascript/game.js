@@ -85,8 +85,11 @@ function getAttacks(){
         player1Attack = attack1.val().attackDB;
         if(player1Attack !== "x" ){
         player1HasAttacked = true;
+        $("#gameResults").empty();
+        $("#gameResults").html("<h1>Waiting</h1>")
         }
         if(player2HasAttacked && player1HasAttacked){
+            $("#gameResults").empty();
             player2DB.off();
             player1DB.off();
             gameLogic(player1Attack, player2Attack)
@@ -98,8 +101,11 @@ function getAttacks(){
         player2Attack = attack2.val().attackDB;
         if(player2Attack !== "x" ){
             player2HasAttacked = true;
+            $("#gameResults").empty();
+        $("#gameResults").html("<h1>Waiting</h1>")
         }
         if(player1HasAttacked && player2HasAttacked){
+            $("#gameResults").empty();
             player2DB.off("value");
             player1DB.off("value");
             gameLogic(player1Attack, player2Attack)

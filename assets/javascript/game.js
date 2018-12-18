@@ -47,7 +47,14 @@
             // })
         }
     })
+    $("#playerNamebtn").click(function(event){
+        event.preventDefault();
+        playerName = $("#playerName").val();
+        console.log("PayerName: " + playerName)
+
+    })
   }
+
 
 function gameBtn(){
     $(".gameBtn").on("click", function(){

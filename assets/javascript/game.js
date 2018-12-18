@@ -31,39 +31,44 @@
   var attackChoose = false;
 
 function buttonClick (){
-//   charButtonHide();
-$(".charBtn").on("click", function () {
-    if (!playerPicked) {
-        playerPicked = true;
-        $(this).css({"background-color": "blue", "opacity": "1.0"})
-        playerChar = $(this).attr("value");
-        if (playerChar === "player1") {
-            player1Chosen.set(true);
-            otherPlayer = "player2"
-        } else { 
-            player2Chosen.set(true)
-            otherPlayer = "player1" 
+    //   charButtonHide();
+    $(".charBtn").on("click", function () {
+        if (!playerPicked) {
+            playerPicked = true;
+            $(this).css({"background-color": "blue", "opacity": "1.0"})
+            playerChar = $(this).attr("value");
+            if (playerChar === "player1") {
+                player1Chosen.set(true);
+                otherPlayer = "player2"
+            } else { 
+                player2Chosen.set(true)
+                otherPlayer = "player1" 
+            }
+            var pC = firebase.database().ref("rps/playerChoice/" + playerChar);
+            pC.onDisconnect().set(false);
+            var playeratt = database.ref("/rps/" + playerChar);
+            playeratt.onDisconnect().set({attackDB: "x"})
+            $('.gameBtn').prop('disabled', false);
+            gameBtn();
         }
-        var pC = firebase.database().ref("rps/playerChoice/" + playerChar);
-        pC.onDisconnect().set(false);
-        var playeratt = database.ref("/rps/" + playerChar);
-        playeratt.onDisconnect().set({attackDB: "x"})
-        $('.gameBtn').prop('disabled', false);
+    })
 
-        console.log("Player: " + playerChar)
-        console.log("Other Player: " + otherPlayer)
-        gameBtn();
+    // Choose your name
+    $("#playerNamebtn").click(function(event){
+        event.preventDefault();
+        playerName = $("#playerName").val();
+        console.log("PayerName: " + playerName)
+    })
 
-        // playerChoice.set({
-        //     otherPlayer: playerChar
-        // })
-    }
-})
-$("#playerNamebtn").click(function(event){
-    event.preventDefault();
-    playerName = $("#playerName").val();
-    console.log("PayerName: " + playerName)
-})
+    $("#clearPlayer").click(function(){
+        database.ref("/rps/playerChoice/" + playerChar).set(false);
+        playerChar;
+        playerPicked = false;
+        attackChoose = false;
+        $('.gameBtn').prop('disabled', true).css("background-color", "");
+        $("#gameResults").empty().hide();
+        $(".gameBtn").off("click");
+    })
 }
 
 
@@ -72,7 +77,7 @@ function gameBtn(){
         if (!attackChoose){
             attackChoose = true;
             let attack = $(this).attr("value");
-            $(this).css({"background-color": "red", "opacity": "1.0"})
+            $(this).css({"background-color": "red"})
             if(playerChar == "player1"){
                 player1DB.set({
                     name: playerName,
@@ -175,11 +180,13 @@ function player(){
             $("#player1").prop("disabled", true)
         }else{
             $("#player1").prop("disabled", false)
+            $("#player1").css({"background-color": "", "opacity": ""})
         }
         if(play2){
             $("#player2").prop("disabled", true)
         }else{
             $("#player2").prop("disabled", false)
+            $("#player2").css({"background-color": "", "opacity": ""})
         }
     })
 }

@@ -13,12 +13,13 @@
   var chatDB = database.ref("/chat");
   var rpsDB = database.ref("/rps");
   var player1DB = database.ref("/rps/player1");
-  player1DB.set({name: "nobody", attackDB: "x"});
   var player2DB = database.ref("/rps/player2");
-  player2DB.set({name: "nobody", attackDB: "x"});
   var playerChoice = database.ref("rps/playerChoice");
   var player1Chosen = database.ref("rps/playerChoice/player1");
   var player2Chosen = database.ref("rps/playerChoice/player2");
+
+//   var ref = firebase.database().ref("rps/playerChoice/" + playerChar);
+//     ref.onDisconnect().set(false);
 
 
   
@@ -34,11 +35,21 @@ function buttonClick (){
 $(".charBtn").on("click", function () {
     if (!playerPicked) {
         playerPicked = true;
-        $(this).css("background-color", "blue")
+        $(this).css({"background-color": "blue", "opacity": "1.0"})
         playerChar = $(this).attr("value");
         if (playerChar === "player1") {
+            player1Chosen.set(true);
             otherPlayer = "player2"
-        } else { otherPlayer = "player1" }
+        } else { 
+            player2Chosen.set(true)
+            otherPlayer = "player1" 
+        }
+        var pC = firebase.database().ref("rps/playerChoice/" + playerChar);
+        pC.onDisconnect().set(false);
+        var playeratt = database.ref("/rps/" + playerChar);
+        playeratt.onDisconnect().set({attackDB: "x"})
+        $('.gameBtn').prop('disabled', false);
+
         console.log("Player: " + playerChar)
         console.log("Other Player: " + otherPlayer)
         gameBtn();
@@ -61,6 +72,7 @@ function gameBtn(){
         if (!attackChoose){
             attackChoose = true;
             let attack = $(this).attr("value");
+            $(this).css({"background-color": "red", "opacity": "1.0"})
             if(playerChar == "player1"){
                 player1DB.set({
                     name: playerName,
@@ -69,7 +81,8 @@ function gameBtn(){
             }else {player2DB.set({
                 name: playerName,
                 attackDB: attack
-            })}
+            })
+        }
         }
     })
 }
@@ -81,6 +94,35 @@ function charButtonHide(){
         $(oP).fadeOut(100);
     })
 }
+
+var connectionsRef = database.ref("/connections");
+// '.info/connected' is a special location provided by Firebase that is updated every time
+// the client's connection state changes.
+// '.info/connected' is a boolean value, true if the client is connected and false if they are not.
+var connectedRef = database.ref(".info/connected");
+
+// When the client's connection state changes...
+connectedRef.on("value", function(snap) {
+
+  // If they are connected..
+  if (snap.val()) {
+
+    // Add user to the connections list.
+    var con = connectionsRef.push(true);
+
+    // Remove user from the connection list when they disconnect.
+    con.onDisconnect().remove();
+  }
+});
+
+// When first loaded or when the connections list changes...
+connectionsRef.on("value", function(snapshot) {
+
+  // Display the viewer count in the html.
+  // The number of online users is the number of children in the connections list.
+  $("#watchers").text(snapshot.numChildren());
+});
+
 
 // this is here as a reminder to how big my first try at game mechanics was
 // function getAttacks(){
@@ -124,6 +166,24 @@ function charButtonHide(){
 
 // }
 
+function player(){
+    playerChoice.on("value",function(miles){
+        let play1 = miles.val().player1;
+        let play2 = miles.val().player2;
+
+        if (play1){
+            $("#player1").prop("disabled", true)
+        }else{
+            $("#player1").prop("disabled", false)
+        }
+        if(play2){
+            $("#player2").prop("disabled", true)
+        }else{
+            $("#player2").prop("disabled", false)
+        }
+    })
+}
+
 function getAttacks(){
     rpsDB.on("value",function(fred){
         let player1Attack = fred.val().player1.attackDB;
@@ -160,12 +220,14 @@ function gameLogic(player1Guess, player1Name, player2Guess, player2Name){
     }
     $("#gameResults").append(win1)
     $("#gameResults").show().delay(2000).fadeOut(500)
+    
     // player1Attack;
     // player2Attack;
     player1DB.set({attackDB: "x"});
     player2DB.set({attackDB: "x"});
     attackChoose = false;
     setTimeout(function(){
+        $(".gameBtn").css("background-color", "")
         getAttacks();
     }, 1000);
 }
@@ -204,6 +266,7 @@ $(document).ready(function(){
     chatUpdate();
     buttonClick();
     getAttacks();
+    player();
 
 
 

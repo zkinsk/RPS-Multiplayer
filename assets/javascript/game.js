@@ -86,7 +86,7 @@ function getAttacks(){
         if(player1Attack !== "x" ){
         player1HasAttacked = true;
         $("#gameResults").empty();
-        $("#gameResults").html("<h1>Waiting</h1>")
+        $("#gameResults").html("<h1>Waiting</h1>").fadeIn(400)
         }
         if(player2HasAttacked && player1HasAttacked){
             $("#gameResults").empty();
@@ -102,7 +102,7 @@ function getAttacks(){
         if(player2Attack !== "x" ){
             player2HasAttacked = true;
             $("#gameResults").empty();
-        $("#gameResults").html("<h1>Waiting</h1>")
+        $("#gameResults").html("<h1>Waiting</h1>").fadeIn(400)
         }
         if(player1HasAttacked && player2HasAttacked){
             $("#gameResults").empty();
@@ -117,7 +117,7 @@ function getAttacks(){
 
 
 function gameLogic(player1Guess, player2Guess){
-    $("#gameResults").empty();
+    $("#gameResults").empty().hide();
     if (player1Guess === "rock" && player2Guess === "sissors" || player1Guess === "sissors" && 
         player2Guess === "paper" || player1Guess === "paper" && player2Guess === "rock") {
         console.log ("player 1 Wins"); 

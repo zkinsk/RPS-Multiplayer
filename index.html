@@ -12,22 +12,48 @@
 <body>
     <div class="container">
         <div class="jumbotron jumbotron-fluid py-4" id="header">
-            <h1 class="display-4"><i class="far fa-clock"></i> <b>Rock Paper Sissors</b></h1>
+            <h1 class="display-4"><b>Rock Paper Sissors</b></h1>
         </div>
-        <div id="chatBox">
-            <form>
-                <div class="form-group actionButtons">
-                    <input type="text" class="form-control-sm" id="chatInput" placeholder="Chat it up!">
-                    <div class="btn-group">
-                        <button type="submit" id="chatButton" value="send" class="btn btn-sm">Send</button>
+        <div class="row">
+            <div class="col">
+                <div id="playerNameBox">
+                    <form>
+                        <input type="text" class="form-control-sm" id="playerName" placeholder="Your Name">
+                         <button type="submit" id="playerNamebtn" value="send" class="btn btn-info btn-sm">Select</button>
+                    </form>
+                </div>
+                <div id="chatBox">
+                    <form>
+                        <div class="form-group actionButtons">
+                            <input type="text" class="form-control-sm" id="chatInput" placeholder="Chat it up!">
+                            <div class="btn-group">
+                                <button type="submit" id="chatButton" value="send" class="btn btn-sm">Send</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="chatArea">
+        
                     </div>
                 </div>
-            </form>
-            <div id="chatArea">
-
+            </div>  
+            <div class="col">
+                    <button type="button" id="player1" value = "player1" class="btn btn-danger btn-sm charBtn">Player 1</button>
+                    <button type="button" id="player2" value = "player2" class="btn btn-danger btn-sm charBtn">Player 2</button>
+            </div>  
+        </div>
+        <br>
+        <div id="gameArea">
+            <div class="row">
+                <div class="col">
+                    <button type="button" id="rockBtn" value="rock" class="btn btn-danger btn-sm gameBtn">Rock</button>
+                    <button type="button" id="paperBtn" value="paper" class="btn btn-danger btn-sm gameBtn">Paper</button>
+                    <button type="button" id="sissorsBtn" value="sissors" class="btn btn-danger btn-sm gameBtn">Sissors</button>
+                </div>
             </div>
+            <div id="gameResults"></div>
         </div>
     </div>
+
 
 
 </body>

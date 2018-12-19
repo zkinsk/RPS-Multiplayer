@@ -10,18 +10,28 @@
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
 </head>
 <body>
+    <div id="playerNameBox">
+        <h3>Please Enter Your Name</h3>
+        <form>
+            <input type="text" class="form-control-sm" id="playerName" placeholder="Your Name">
+            <button type="submit" id="playerNamebtn" value="send" class="btn btn-info btn-sm">Select</button>
+        </form>
+    </div>
     <div class="container">
-        <div class="jumbotron jumbotron-fluid py-4" id="header">
-            <h1 class="display-4"><b>Rock Paper Sissors</b></h1>
+        <div class="jumbotron jumbotron-fluid py-1" id="header">
+            <h4 class="display-4"><b>Rock Paper Sissors</b></h4>
+            <hr class="my-2">
+            <h3 id="userName">Nobody</h3>
+            <button type="button" id="changeUser" class="btn btn-sm btn-danger"><i class="fas fa-backspace"></i></button>
         </div>
         <div class="row">
             <div class="col">
-                <div id="playerNameBox">
+                <!-- <div id="playerNameBox">
                     <form>
                         <input type="text" class="form-control-sm" id="playerName" placeholder="Your Name">
                          <button type="submit" id="playerNamebtn" value="send" class="btn btn-info btn-sm">Select</button>
                     </form>
-                </div>
+                </div> -->
                 <div id="chatBox">
                     <form>
                         <div class="form-group actionButtons">

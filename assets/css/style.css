@@ -1,3 +1,21 @@
+#playerNameBox{
+    display: none;
+    margin: auto;
+
+}
+#userName {
+    display: inline-block;
+    /* margin-right: 1px; */
+}
+#changeUser {
+    display: inline-block;
+    position: relative;
+    top: -5px;
+    left: 1px;
+    /* transform: translate(-50%, -50%); */
+    transform: scale(0.650, 0.650);
+}
+
 #chatBox{
     background-color: lightgreen;
     height: 200px;
@@ -14,4 +32,8 @@
 
 #chatInput {
     width: 70%
+}
+
+.container {
+    display: none;
 }

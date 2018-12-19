@@ -58,6 +58,13 @@ function buttonClick (){
         event.preventDefault();
         playerName = $("#playerName").val();
         console.log("PayerName: " + playerName)
+        if (playerName != ""){
+            $("#playerNameBox").hide();
+            $(".container").slideDown(200)
+            $("#userName").text(playerName);
+            localStorage.setItem("userDB", playerName);
+        }else{}
+
     })
 
     $("#clearPlayer").click(function(){
@@ -68,6 +75,11 @@ function buttonClick (){
         $('.gameBtn').prop('disabled', true).css("background-color", "");
         $("#gameResults").empty().hide();
         $(".gameBtn").off("click");
+    })
+
+    $("#changeUser").click(function(){
+        localStorage.clear();
+        nameCheck();
     })
 }
 
@@ -267,15 +279,27 @@ function chatUpdate(){
     });
 }
 
-
-$(document).ready(function(){
+function nameCheck(){
+    if (localStorage.getItem("userDB") !== null ){
+        playerName = localStorage.getItem("userDB")
+        $("#playerNameBox").hide();
+        $(".container").fadeIn(200)
+        $("#userName").text(playerName);
+    }else{
+        $(".container").hide();
+        $("#playerNameBox").fadeIn(200);
+    };
     chat();
     chatUpdate();
     buttonClick();
     getAttacks();
     player();
 
+}
 
 
+$(document).ready(function(){
+    nameCheck();
+   
 // end of doc ready
 })

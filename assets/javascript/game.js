@@ -57,6 +57,7 @@ function buttonClick (){
     $("#playerNamebtn").click(function(event){
         event.preventDefault();
         playerName = $("#playerName").val();
+        $("#playerName").val("");
         console.log("PayerName: " + playerName)
         if (playerName != ""){
             $("#playerNameBox").hide();

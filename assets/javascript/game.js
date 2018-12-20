@@ -321,9 +321,8 @@ function scoreKeeper(winner){
         localStorage.setItem("userLoss", loss);
         $("#lossCount").text(loss);
     }
+    setStats();
 };
-
-
 // chat functions
 function chat(){
   $("#chatButton").click(function(event){

@@ -391,7 +391,8 @@ function setStats(){
             losses: loss,
         });
     } 
-    playerStatsDB.onDisconnect().remove()
+    var refresh = playerStatsDB.child(statID)
+    refresh.onDisconnect().remove()
     // statID.onDisconnect().remove();
     
     // trainDB.child(tK).remove();

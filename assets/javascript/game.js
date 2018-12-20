@@ -15,9 +15,10 @@
   var player1DB = database.ref("/rps/player1");
   var player2DB = database.ref("/rps/player2");
   var playerChoice = database.ref("rps/playerChoice");
-  var player1Chosen = database.ref("rps/playerChoice/player1");
-  var player2Chosen = database.ref("rps/playerChoice/player2");
-  var playerStats = database.ref("/playerstats")
+//   var player1Chosen = database.ref("rps/playerChoice/player1");
+//   var player2Chosen = database.ref("rps/playerChoice/player2");
+  var playerStatsDB = database.ref("/playerstats");
+  var statID;
   var wins = 0;
   var loss = 0;
   var ties = 0;
@@ -34,6 +35,7 @@
   var playerPicked = false;
   var attackChoose = false;
 
+//   choose name - 
 function buttonClick (){
     //   pick payer number
     $(".charBtn").on("click", function () {
@@ -59,7 +61,7 @@ function buttonClick (){
             var pC = firebase.database().ref("rps/playerChoice/" + playerChar);
             pC.onDisconnect().set(false);
             var playeratt = database.ref("/rps/" + playerChar);
-            playeratt.onDisconnect().set({attackDB: "x"})
+            playeratt.onDisconnect().set({name: "nobody", attackDB: "x"})
             $('.gameBtn').prop('disabled', false);
             gameBtn();
         }
@@ -76,30 +78,56 @@ function buttonClick (){
             $(".container").slideDown(200)
             $("#userName").text(playerName);
             localStorage.setItem("userDB", playerName);
+            localStorage.setItem("userWins", wins);
+            localStorage.setItem("userTies", ties);
+            localStorage.setItem("userLoss", loss);
             $("#winCount").text(wins);
             $("#tieCount").text(ties);
             $("#lossCount").text(loss);
+            setStats();
         }else{}
 
     })
 
     $("#clearPlayer").click(function(){
         database.ref("/rps/playerChoice/" + playerChar).set(false);
+        if (playerChar === "player1") {
+            player1Chosen.set(false);
+            player1DB.set({
+                name: "nobody",
+                attackDB: "x"
+            })
+            // otherPlayer = "player2"
+        } else { 
+            player2Chosen.set(false)
+            player2DB.set({
+                name: "nobody",
+                attackDB: "x"
+            })
+        }
         playerChar;
         playerPicked = false;
         attackChoose = false;
         $('.gameBtn').prop('disabled', true).css("background-color", "");
         $("#gameResults").empty().hide();
         $(".gameBtn").off("click");
-    })
+    });
 
+    // change user name - clears user stats and everything from local storage
     $("#changeUser").click(function(){
         localStorage.clear();
         nameCheck();
-    })
+        playerStats.child(statID).remove();
+        wins = 0;
+        ties = 0;
+        loss = 0;           
+        $("#winCount").text(wins);
+        $("#tieCount").text(ties);
+        $("#lossCount").text(loss);
+    });
 };
 
-
+// choose attack and send it to the database
 function gameBtn(){
     $(".gameBtn").on("click", function(){
         if (!attackChoose){
@@ -267,8 +295,8 @@ function gameLogic(player1Guess, player1Name, player2Guess, player2Name){
     
     // player1Attack;
     // player2Attack;
-    player1DB.set({attackDB: "x"});
-    player2DB.set({attackDB: "x"});
+    player1DB.set({name: player1Name, attackDB: "x"});
+    player2DB.set({name: player2Name, attackDB: "x"});
     attackChoose = false;
     setTimeout(function(){
         $(".gameBtn").css("background-color", "")
@@ -337,6 +365,7 @@ function nameCheck(){
         $("#playerNameBox").hide();
         $(".container").fadeIn(200)
         $("#userName").text(playerName);
+        setStats();
     }else{
         $(".container").hide();
         $("#playerNameBox").fadeIn(200);
@@ -346,14 +375,36 @@ function nameCheck(){
 };
 
 function setStats(){
-
-
+    if (statID){
+        playerStatsDB.child(statID).set({
+            name: playerName,
+            wins: wins,
+            ties: ties,
+            losses: loss,
+        });
+    }else{
+        statID = playerStatsDB.push().getKey();
+        playerStatsDB.child(statID).set({
+            name: playerName,
+            wins: wins,
+            ties: ties,
+            losses: loss,
+        });
+    } 
+    playerStatsDB.onDisconnect().remove()
+    // statID.onDisconnect().remove();
+    
+    // trainDB.child(tK).remove();
 };
 
 function playerStats(){
-    playerStats.on("value", function(stats){
-        stats.forEach(function(pstats){
-                
+    playerStatsDB.on("value", function(upDate){
+        $("tbody").empty();
+        upDate.forEach(function(pstats){
+            tData = $("<td>" + pstats.val().name + "</td> <td>" + pstats.val().wins + "</td><td>" + pstats.val().losses + "</td> <td>" + pstats.val().ties + "</td>" )
+            tRow = $("<tr>");
+            tRow.append(tData);
+            $("tbody").append(tRow);
         })
     })
 }
@@ -366,7 +417,7 @@ $(document).ready(function(){
     buttonClick();
     getAttacks();
     player();
-    // playerStats();
+    playerStats();
     connectionCounter();
    
 // end of doc ready

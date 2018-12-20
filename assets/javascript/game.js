@@ -17,6 +17,10 @@
   var playerChoice = database.ref("rps/playerChoice");
   var player1Chosen = database.ref("rps/playerChoice/player1");
   var player2Chosen = database.ref("rps/playerChoice/player2");
+  var recentPostsRef = firebase.database().ref('/chat').limitToLast(10)
+  var wins = 0;
+  var loss = 0;
+  var ties = 0;
 
 //   var ref = firebase.database().ref("rps/playerChoice/" + playerChar);
 //     ref.onDisconnect().set(false);
@@ -229,14 +233,17 @@ function gameLogic(player1Guess, player1Name, player2Guess, player2Name){
         player2Guess === "paper" || player1Guess === "paper" && player2Guess === "rock") {
         console.log ("player 1 Wins"); 
         var win1 = $("<h1>").text(player1Name + " Wins!")
+        scoreKeeper("player1");
     }
     else if (player1Guess === player2Guess){
         console.log ("you tie");
-        var win1 = $("<h1>").text("Its a Tie!")
+        var win1 = $("<h1>").text("Its a Tie!");
+        scoreKeeper("tie");
     }
     else  {
         console.log ("player 2 Wins");
-        var win1 = $("<h1>").text(player2Name + " Wins!")
+        var win1 = $("<h1>").text(player2Name + " Wins!");
+        scoreKeeper("player2");
     }
     $("#gameResults").append(win1)
     $("#gameResults").show().delay(2000).fadeOut(500)
@@ -252,6 +259,21 @@ function gameLogic(player1Guess, player1Name, player2Guess, player2Name){
     }, 1000);
 }
 
+function scoreKeeper(winner){
+    if (winner === playerChar){
+        wins++
+        $("#winCount").text(wins);
+    }
+    else if(winner === "tie"){
+        ties++
+        $("#tieCount").text(ties);
+        
+    }else{
+        loss++
+        $("#lossCount").text(loss);
+    }
+}
+
 
 function chat(){
   $("#chatButton").click(function(event){
@@ -259,7 +281,7 @@ function chat(){
       console.log("click");
       let chatText = $("#chatInput").val()
       console.log(chatText);
-      chatDB.set({
+      chatDB.push({
           user: playerName,
           chatTextDB: chatText
         });
@@ -271,12 +293,14 @@ function chat(){
 
 function chatUpdate(){
     chatDB.on("value", function(chatText){
-        let userName = chatText.val().user;
-        let chatT = chatText.val().chatTextDB
+        chatText.forEach(function(chat){
+        let userName = chat.val().user;
+        let chatT = chat.val().chatTextDB
         // console.log(userName);
         // console.log(chatT);
         let message = $("<p>").text(userName + ": " + chatT)
         $("#chatArea").prepend(message);
+        });
     });
 }
 
@@ -290,17 +314,18 @@ function nameCheck(){
         $(".container").hide();
         $("#playerNameBox").fadeIn(200);
     };
-    chat();
-    chatUpdate();
-    buttonClick();
-    getAttacks();
-    player();
+
 
 }
 
 
 $(document).ready(function(){
     nameCheck();
+    chat();
+    chatUpdate();
+    buttonClick();
+    getAttacks();
+    player();
    
 // end of doc ready
 })

@@ -23,6 +23,12 @@
             <hr class="my-2">
             <h3 id="userName">Nobody</h3>
             <button type="button" id="changeUser" class="btn btn-sm btn-danger"><i class="fas fa-backspace"></i></button>
+            <div id="score">
+                <p id="wins" class="score">Wins: <span id="winCount">0</span></p>
+                <p id="losses" class="score">&nbsp; &nbsp; Loses: <span id="lossCount">0</span></p>
+                <p id="ties" class="score">&nbsp; &nbsp; Ties: <span id="tieCount">0</span></p>
+            
+            </div>
         </div>
         <div class="row">
             <div class="col">
@@ -35,7 +41,7 @@
                 <div id="chatBox">
                     <form>
                         <div class="form-group actionButtons">
-                            <input type="text" class="form-control-sm" id="chatInput" placeholder="Chat it up!">
+                            <input autocomplete="off" type="text" class="form-control-sm" id="chatInput" placeholder="Chat it up!">
                             <div class="btn-group">
                                 <button type="submit" id="chatButton" value="send" class="btn btn-sm">Send</button>
                             </div>

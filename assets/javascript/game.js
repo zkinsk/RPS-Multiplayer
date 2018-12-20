@@ -17,7 +17,7 @@
   var playerChoice = database.ref("rps/playerChoice");
   var player1Chosen = database.ref("rps/playerChoice/player1");
   var player2Chosen = database.ref("rps/playerChoice/player2");
-  var recentPostsRef = firebase.database().ref('/chat').limitToLast(10)
+  var playerStats = database.ref("/playerstats")
   var wins = 0;
   var loss = 0;
   var ties = 0;
@@ -30,12 +30,12 @@
 
   var playerName = "nobody";
   var playerChar;
-  var otherPlayer;
+//   var otherPlayer;
   var playerPicked = false;
   var attackChoose = false;
 
 function buttonClick (){
-    //   charButtonHide();
+    //   pick payer number
     $(".charBtn").on("click", function () {
         if (!playerPicked) {
             playerPicked = true;
@@ -43,10 +43,18 @@ function buttonClick (){
             playerChar = $(this).attr("value");
             if (playerChar === "player1") {
                 player1Chosen.set(true);
-                otherPlayer = "player2"
+                player1DB.set({
+                    name: playerName,
+                    attackDB: "x"
+                })
+                // otherPlayer = "player2"
             } else { 
                 player2Chosen.set(true)
-                otherPlayer = "player1" 
+                player2DB.set({
+                    name: playerName,
+                    attackDB: "x"
+                })
+                // otherPlayer = "player1" 
             }
             var pC = firebase.database().ref("rps/playerChoice/" + playerChar);
             pC.onDisconnect().set(false);
@@ -89,7 +97,7 @@ function buttonClick (){
         localStorage.clear();
         nameCheck();
     })
-}
+};
 
 
 function gameBtn(){
@@ -110,87 +118,90 @@ function gameBtn(){
         }
         }
     })
-}
+};
 
 
-function charButtonHide(){
+/* function charButtonHide(){
     playerChoice.on("value", function(choice){
         let oP = "#" + choice.val().otherPlayer;
         $(oP).fadeOut(100);
     })
-}
+} */
 
-var connectionsRef = database.ref("/connections");
-// '.info/connected' is a special location provided by Firebase that is updated every time
-// the client's connection state changes.
-// '.info/connected' is a boolean value, true if the client is connected and false if they are not.
-var connectedRef = database.ref(".info/connected");
+function connectionCounter(){
+    var connectionsRef = database.ref("/connections");
+    // '.info/connected' is a special location provided by Firebase that is updated every time
+    // the client's connection state changes.
+    // '.info/connected' is a boolean value, true if the client is connected and false if they are not.
+    var connectedRef = database.ref(".info/connected");
+    
+    // When the client's connection state changes...
+    connectedRef.on("value", function(snap) {
+    
+      // If they are connected..
+      if (snap.val()) {
+    
+        // Add user to the connections list.
+        var con = connectionsRef.push(true);
+    
+        // Remove user from the connection list when they disconnect.
+        con.onDisconnect().remove();
+      }
+    });
+    
+    // When first loaded or when the connections list changes...
+    connectionsRef.on("value", function(snapshot) {
+    
+      // Display the viewer count in the html.
+      // The number of online users is the number of children in the connections list.
+      $("#watchers").text(snapshot.numChildren());
+    });
+};
 
-// When the client's connection state changes...
-connectedRef.on("value", function(snap) {
+/* this is here as a reminder to how big and messy my first try at game mechanics was
+function getAttacks(){
+    player1DB.on("value", function(attack1){
+        let player1Attack = attack1.val().attackDB;
+        let player1Name = attack1.val().name;
+        player2DB.once("value", function(attack2){
 
-  // If they are connected..
-  if (snap.val()) {
+        })
+        let player 
+        if(player1Attack !== "x" ){
+        player1HasAttacked = true;
+        $("#gameResults").empty();
+        $("#gameResults").html("<h1>Waiting</h1>").fadeIn(400)
+        }
+        if(player2HasAttacked && player1HasAttacked){
+            $("#gameResults").empty();
+            player2DB.off();
+            player1DB.off();
+            gameLogic(player1Attack, player1Name, player2Attack, player2Name)
+        }
 
-    // Add user to the connections list.
-    var con = connectionsRef.push(true);
+    });
 
-    // Remove user from the connection list when they disconnect.
-    con.onDisconnect().remove();
-  }
-});
+    player2DB.on("value", function(attack2){
+        player2Attack = attack2.val().attackDB;
+        player2Name = attack2.val().name;
+        if(player2Attack !== "x" ){
+            player2HasAttacked = true;
+            $("#gameResults").empty();
+        $("#gameResults").html("<h1>Waiting</h1>").fadeIn(400)
+        }
+        if(player1HasAttacked && player2HasAttacked){
+            $("#gameResults").empty();
+            player2DB.off("value");
+            player1DB.off("value");
+            gameLogic(player1Attack, player1Name , player2Attack, player2Name)
+        }
 
-// When first loaded or when the connections list changes...
-connectionsRef.on("value", function(snapshot) {
+    });
 
-  // Display the viewer count in the html.
-  // The number of online users is the number of children in the connections list.
-  $("#watchers").text(snapshot.numChildren());
-});
+} */
 
 
-// this is here as a reminder to how big my first try at game mechanics was
-// function getAttacks(){
-//     player1DB.on("value", function(attack1){
-//         let player1Attack = attack1.val().attackDB;
-//         let player1Name = attack1.val().name;
-//         player2DB.once("value", function(attack2){
-
-//         })
-//         let player 
-//         if(player1Attack !== "x" ){
-//         player1HasAttacked = true;
-//         $("#gameResults").empty();
-//         $("#gameResults").html("<h1>Waiting</h1>").fadeIn(400)
-//         }
-//         if(player2HasAttacked && player1HasAttacked){
-//             $("#gameResults").empty();
-//             player2DB.off();
-//             player1DB.off();
-//             gameLogic(player1Attack, player1Name, player2Attack, player2Name)
-//         }
-
-//     });
-
-//     player2DB.on("value", function(attack2){
-//         player2Attack = attack2.val().attackDB;
-//         player2Name = attack2.val().name;
-//         if(player2Attack !== "x" ){
-//             player2HasAttacked = true;
-//             $("#gameResults").empty();
-//         $("#gameResults").html("<h1>Waiting</h1>").fadeIn(400)
-//         }
-//         if(player1HasAttacked && player2HasAttacked){
-//             $("#gameResults").empty();
-//             player2DB.off("value");
-//             player1DB.off("value");
-//             gameLogic(player1Attack, player1Name , player2Attack, player2Name)
-//         }
-
-//     });
-
-// }
-
+// pick player 1 or player 2
 function player(){
     playerChoice.on("value",function(miles){
         let play1 = miles.val().player1;
@@ -209,8 +220,9 @@ function player(){
             $("#player2").css({"background-color": "", "opacity": ""})
         }
     })
-}
+};
 
+// get attack values from database and if both are attacks - call game logic function
 function getAttacks(){
     rpsDB.on("value",function(fred){
         let player1Attack = fred.val().player1.attackDB;
@@ -219,7 +231,9 @@ function getAttacks(){
         let player2Name = fred.val().player2.name;
         if((player1Attack !== "x" && player2Attack == "x") || (player1Attack == "x" && player2Attack !== "x")  ) {
             $("#gameResults").empty();
-            $("#gameResults").html("<h1>Waiting</h1>").fadeIn(400)
+            if (player1Attack == "x"){
+                $("#gameResults").html("<h1>Waiting on " + player1Name + "</h1>").fadeIn(400)
+            }else($("#gameResults").html("<h1>Waiting on " + player2Name + "</h1>").fadeIn(400))
         }
         if(player1Attack !== "x" && player2Attack !== "x"){
         rpsDB.off("value");
@@ -227,9 +241,9 @@ function getAttacks(){
         gameLogic(player1Attack, player1Name , player2Attack, player2Name)
         }
     });
-}
+};
 
-
+// review attack data and determin a winner of the game
 function gameLogic(player1Guess, player1Name, player2Guess, player2Name){
     $("#gameResults").empty().hide();
     if (player1Guess === "rock" && player2Guess === "sissors" || player1Guess === "sissors" && 
@@ -260,8 +274,9 @@ function gameLogic(player1Guess, player1Name, player2Guess, player2Name){
         $(".gameBtn").css("background-color", "")
         getAttacks();
     }, 1000);
-}
+};
 
+// update scores and write to page and local storage
 function scoreKeeper(winner){
     if (winner === playerChar){
         wins++
@@ -278,9 +293,10 @@ function scoreKeeper(winner){
         localStorage.setItem("userLoss", loss);
         $("#lossCount").text(loss);
     }
-}
+};
 
 
+// chat functions
 function chat(){
   $("#chatButton").click(function(event){
       event.preventDefault();
@@ -293,10 +309,9 @@ function chat(){
         });
       $("#chatInput").val("");
     })
-}
+};
 
-
-
+// updae chat box
 function chatUpdate(){
     chatDB.on("value", function(chatText){
         chatText.forEach(function(chat){
@@ -308,7 +323,7 @@ function chatUpdate(){
         $("#chatArea").prepend(message);
         });
     });
-}
+};
 
 function nameCheck(){
     if (localStorage.getItem("userDB") !== null ){
@@ -328,6 +343,19 @@ function nameCheck(){
     };
 
 
+};
+
+function setStats(){
+
+
+};
+
+function playerStats(){
+    playerStats.on("value", function(stats){
+        stats.forEach(function(pstats){
+                
+        })
+    })
 }
 
 
@@ -338,6 +366,8 @@ $(document).ready(function(){
     buttonClick();
     getAttacks();
     player();
+    // playerStats();
+    connectionCounter();
    
 // end of doc ready
 })

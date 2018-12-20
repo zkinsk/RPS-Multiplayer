@@ -68,6 +68,9 @@ function buttonClick (){
             $(".container").slideDown(200)
             $("#userName").text(playerName);
             localStorage.setItem("userDB", playerName);
+            $("#winCount").text(wins);
+            $("#tieCount").text(ties);
+            $("#lossCount").text(loss);
         }else{}
 
     })
@@ -262,14 +265,17 @@ function gameLogic(player1Guess, player1Name, player2Guess, player2Name){
 function scoreKeeper(winner){
     if (winner === playerChar){
         wins++
+        localStorage.setItem("userWins", wins);
         $("#winCount").text(wins);
     }
     else if(winner === "tie"){
         ties++
+        localStorage.setItem("userTies", ties);
         $("#tieCount").text(ties);
         
     }else{
         loss++
+        localStorage.setItem("userLoss", loss);
         $("#lossCount").text(loss);
     }
 }
@@ -307,6 +313,12 @@ function chatUpdate(){
 function nameCheck(){
     if (localStorage.getItem("userDB") !== null ){
         playerName = localStorage.getItem("userDB")
+        wins = localStorage.getItem("userWins")
+        ties = localStorage.getItem("userTies")
+        loss = localStorage.getItem("userLoss")
+        $("#winCount").text(wins);
+        $("#tieCount").text(ties);
+        $("#lossCount").text(loss);
         $("#playerNameBox").hide();
         $(".container").fadeIn(200)
         $("#userName").text(playerName);

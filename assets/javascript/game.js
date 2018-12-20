@@ -15,8 +15,8 @@
   var player1DB = database.ref("/rps/player1");
   var player2DB = database.ref("/rps/player2");
   var playerChoice = database.ref("rps/playerChoice");
-//   var player1Chosen = database.ref("rps/playerChoice/player1");
-//   var player2Chosen = database.ref("rps/playerChoice/player2");
+  var player1Chosen = database.ref("rps/playerChoice/player1");
+  var player2Chosen = database.ref("rps/playerChoice/player2");
   var playerStatsDB = database.ref("/playerstats");
   var statID;
   var wins = 0;

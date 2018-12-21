@@ -117,7 +117,7 @@ function buttonClick (){
     $("#changeUser").click(function(){
         localStorage.clear();
         nameCheck();
-        playerStats.child(statID).remove();
+        playerStatsDB.child(statID).remove();
         wins = 0;
         ties = 0;
         loss = 0;           
@@ -263,7 +263,7 @@ function getAttacks(){
                 $("#gameResults").html("<h1>Waiting on " + player1Name + "</h1>").fadeIn(400)
             }else($("#gameResults").html("<h1>Waiting on " + player2Name + "</h1>").fadeIn(400))
         }
-        if(player1Attack !== "x" && player2Attack !== "x"){
+        if(player1Attack !== "x" && player2Attack !== "x" && playerPicked){
         rpsDB.off("value");
         $("#gameResults").empty();
         gameLogic(player1Attack, player1Name , player2Attack, player2Name)

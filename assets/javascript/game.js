@@ -76,7 +76,7 @@ function buttonClick (){
         console.log("PayerName: " + playerName)
         if (playerName != ""){
             $("#playerNameBox").hide();
-            $(".container").slideDown(200)
+            $("#overallGameBox").slideDown(200)
             $("#userName").text(playerName);
             localStorage.setItem("userDB", playerName);
             localStorage.setItem("userWins", wins);
@@ -367,11 +367,11 @@ function nameCheck(){
         $("#tieCount").text(ties);
         $("#lossCount").text(loss);
         $("#playerNameBox").hide();
-        $(".container").fadeIn(200)
+        $("#overallGameBox").fadeIn(200)
         $("#userName").text(playerName);
         setStats();
     }else{
-        $(".container").hide();
+        $("#overallGameBox").hide();
         $("#playerNameBox").fadeIn(200);
     };
 

@@ -1,7 +1,19 @@
+
+
+*{
+    /* border: 1px black solid; */
+}
+
+body {
+    background-color: darkgoldenrod;
+}
 #playerNameBox{
     display: none;
     margin: auto;
 
+}
+#overallGameBox {
+    display: none;
 }
 #userBox {
     margin: auto;
@@ -55,9 +67,7 @@
     width: 100%;
 } */
 
-.container {
-    display: none;
-}
+
 #watcherBox p {
     text-align: center;
 }

@@ -10,122 +10,105 @@
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
 </head>
 <body>
-    <div id="playerNameBox">
-        <h3>Please Enter Your Name</h3>
-        <form>
-            <input type="text" class="form-control-sm" id="playerName" placeholder="Your Name">
-            <button type="submit" id="playerNamebtn" value="send" class="btn btn-info btn-sm">Select</button>
-        </form>
-    </div>
-    <div class="container">
-        <div class="jumbotron jumbotron-fluid py-0" id="header">
-            <!-- <h4 class="display-4"><b>Rock Paper Sissors</b></h4>
-            <hr class="my-2"> -->
-            <div id="userBox">
-            <h3 id="userName">Nobody</h3>
-            <button type="button" id="changeUser" class="btn btn-sm btn-danger"><i class="fas fa-backspace"></i></button>
-            <div id="score">
-                <p id="wins" class="score">Wins: <span id="winCount">0</span></p>
-                <p id="losses" class="score">&nbsp; &nbsp; Loses: <span id="lossCount">0</span></p>
-                <p id="ties" class="score">&nbsp; &nbsp; Ties: <span id="tieCount">0</span></p>
-            </div>
-            
-            </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-md-3 playerButtons">
-                <button type="button" id="player1" value="player1" class="btn btn-secondary btn-sm charBtn">Player 1</button>
-            </div>
-            <div class="col-md-2 playerButtons">
-                <button type="button" id="clearPlayer" class="btn btn-dark btn-sm clearBtn">clear</button>
-            </div>
-            <div class="col-md-3 playerButtons">
-                <button type="button" id="player2" value="player2" class="btn btn-secondary btn-sm charBtn">Player 2</button>
-            </div>
-        
-        </div>
 
-        <div class="row justify-content-center">
-            <div class="col" id="player1GameArea">
-                    <button type="button" id="rockBtn" value="rock" class="btn btn-secondary btn-sm gameBtn" disabled>Rock</button>
-                    <button type="button" id="paperBtn" value="paper" class="btn btn-secondary btn-sm gameBtn" disabled>Paper</button>
-                    <button type="button" id="sissorsBtn" value="sissors" class="btn btn-secondary btn-sm gameBtn" disabled>Sissors</button>
+    <div class="container">
+        <div id="playerNameBox">
+            <h3>Please Enter Your Name</h3>
+            <form>
+                <input type="text" class="form-control-sm" id="playerName" placeholder="Your Name">
+                <button type="submit" id="playerNamebtn" value="send" class="btn btn-info btn-sm">Select</button>
+            </form>
+        </div>
+        <div id="overallGameBox">
+            <div class="jumbotron jumbotron-fluid py-0" id="header">
+                <!-- <h4 class="display-4"><b>Rock Paper Sissors</b></h4>
+            <hr class="my-2"> -->
+                <div id="userBox">
+                    <h3 id="userName">Nobody</h3>
+                    <button type="button" id="changeUser" class="btn btn-sm btn-danger"><i class="fas fa-backspace"></i></button>
+                    <div id="score">
+                        <p id="wins" class="score">Wins: <span id="winCount">0</span></p>
+                        <p id="losses" class="score">&nbsp; &nbsp; Loses: <span id="lossCount">0</span></p>
+                        <p id="ties" class="score">&nbsp; &nbsp; Ties: <span id="tieCount">0</span></p>
+                    </div>
+
+                </div>
             </div>
-            <div class="col-4-md">
-                <div id="chatBox">
-                    <form>
-                        <div class="input-group actionButtons">
-                            <input autocomplete="off" type="text" class="form-control" id="chatInput" placeholder="Chat it up!">
-                            <div class="input-group-append">
-                                <button type="submit" id="chatButton" value="send" class="btn btn-outline-warning btn-sm">Send</button>
+            <div class="row justify-content-center">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-4 playerButtons">
+                            <button type="button" id="player1" value="player1" class="btn btn-secondary btn-sm charBtn">Player 1</button>
+                        </div>
+                        <div class="col-4 playerButtons">
+                            <button type="button" id="clearPlayer" class="btn btn-dark btn-sm clearBtn">clear</button>
+                        </div>
+                        <div class="col-4 playerButtons">
+                            <button type="button" id="player2" value="player2" class="btn btn-secondary btn-sm charBtn">Player 2</button>
+                        </div>
+                        <div class="col-12">
+                            <button type="button" id="rockBtn" value="rock" class="btn btn-secondary btn-sm gameBtn" disabled>Rock</button>
+                            <button type="button" id="paperBtn" value="paper" class="btn btn-secondary btn-sm gameBtn" disabled>Paper</button>
+                            <button type="button" id="sissorsBtn" value="sissors" class="btn btn-secondary btn-sm gameBtn" disabled>Sissors</button>
+                        </div>
+                        <div class="col-12">
+                            <div id="gameArea">
+                                <div class="row">
+                                    <div class="col">
+                                    </div>
+                                </div>
+                                <div id="gameResults"></div>
                             </div>
                         </div>
-                    </form>
-                    <div id="chatArea">
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div id="chatBox">
+                        <form>
+                            <div class="input-group actionButtons">
+                                <input autocomplete="off" type="text" class="form-control" id="chatInput" placeholder="Chat it up!">
+                                <div class="input-group-append">
+                                    <button type="submit" id="chatButton" value="send" class="btn btn-outline-warning btn-sm">Send</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div id="chatArea">
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col" id="player2GameArea">
-                    <button type="button" id="rockBtn" value="rock" class="btn btn-secondary btn-sm gameBtn" disabled>Rock</button>
-                    <button type="button" id="paperBtn" value="paper" class="btn btn-secondary btn-sm gameBtn" disabled>Paper</button>
-                    <button type="button" id="sissorsBtn" value="sissors" class="btn btn-secondary btn-sm gameBtn" disabled>Sissors</button>
-            </div>
-        </div>
-
-
-        <!-- <div class="row">
-            <div class="col">
-                <h4><i class="fas fa-eye"></i> <span id="watchers"></span></h4> -->
-                <!-- <table id="userTable" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>User Name</th>
-                            <th>Wins</th>
-                            <th>Losses</th>
-                            <th>Ties</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </div> -->
-        <br>
-        <div id="gameArea">
             <div class="row">
-                <div class="col">
-                   
+                <div class="col-12">
+                    <div id="watcherBox">
+                        <p>
+                            <button class="btn btn-dark btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample"
+                                aria-expanded="false" aria-controls="collapseExample">
+                                <i class="fas fa-eye"></i>
+                                <span id="watchers"></span>
+                            </button>
+                        </p>
+                        <div class="collapse" id="collapseExample">
+                            <div class="card card-body">
+                                <table id="userTable" class="table table-sm" style="width:100%">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>User Name</th>
+                                            <th>Wins</th>
+                                            <th>Losses</th>
+                                            <th>Ties</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div id="gameResults"></div>
         </div>
     </div>
-    <div id="watcherBox">
-        <p>
-            <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#collapseExample"
-                aria-expanded="false" aria-controls="collapseExample">
-                <i class="fas fa-eye"></i>
-                <span id="watchers"></span>
-            </button>
-        </p>
-        <div class="collapse" id="collapseExample">
-            <div class="card card-body">
-                <table id="userTable" class="table table-sm" style="width:100%">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>User Name</th>
-                            <th>Wins</th>
-                            <th>Losses</th>
-                            <th>Ties</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
 
-            </div>
-        </div>
-    </div>
 
 
 

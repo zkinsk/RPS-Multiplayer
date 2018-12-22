@@ -356,10 +356,12 @@ function chat(){
       console.log("click");
       let chatText = $("#chatInput").val()
       console.log(chatText);
-      chatDB.push({
-          user: playerName,
-          chatTextDB: chatText
-        });
+      if (chatText != ""){
+        chatDB.push({
+            user: playerName,
+            chatTextDB: chatText
+          });
+      }
       $("#chatInput").val("");
     })
 };

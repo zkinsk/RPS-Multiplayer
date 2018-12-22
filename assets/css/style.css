@@ -41,33 +41,77 @@ body {
 .playerButtons {
     text-align: center;
 }
+.attackButtons {
+    text-align: center;
+}
+.gameBtn {
+    transition: all 0.5s;
+
+}
+.attackImage {
+    width: 50px;
+    height: 50px;
+    /* transition: all 1s; */
+}
+.otherAttack {
+    /* width: 60px;
+    height: 60px; */
+    background-color: red;
+
+}
+
+#gameResults {
+    height: 50px;
+}
 
 
 /* chat box css */
 #chatBox{
-    /* background-color: lightgreen; */
     height: 200px;
     width: 100%;
     overflow: hidden;
+    background-color: white;
+    padding: 5px;
+}
+#chatForm {
+    border-bottom: solid black 1px
 }
 #chatArea{
+    position: relative;
     background-color: lightgreen;
     overflow:auto;
-    height: 70%;
+    height: 80%;
 }
 #chatArea p {
     margin: 0;
 }
 .myChat {
     text-align: right;
-    background-color: lightcoral;
+    margin-top: 1px;
+}
+.myChat p {
+    background-color: #8afe37;
+    padding: 5px;
+    border: 1px transparent solid;
+    border-radius: 6px;
+    display: inline-block;
 }
 
-/* #chatInput {
-    width: 100%;
-} */
+.otherChat {
+    margin-top: 1px
+
+}
+.otherChat p {
+    background-color: #52b4ff;
+    padding: 5px;
+    border: 1px transparent solid;
+    border-radius: 6px;
+    display: inline-block;
+
+}
 
 
+/* watcher box css */
 #watcherBox p {
     text-align: center;
 }

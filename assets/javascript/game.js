@@ -110,8 +110,9 @@ function buttonClick (){
         playerChar;
         playerPicked = false;
         attackChoose = false;
+        $(".charBtn").css({"background-color": ""})
         $('.gameBtn').prop('disabled', true).css("background-color", "");
-        $("#gameResults").empty().hide();
+        $("#gameResults h4").empty().hide();
         $(".gameBtn").off("click");
     });
 
@@ -135,7 +136,7 @@ function gameBtn(){
         if (!attackChoose){
             attackChoose = true;
             let attack = $(this).attr("value");
-            $(this).css({"background-color": "red"})
+            $(this).css({"background-color": "blue"})
             if(playerChar == "player1"){
                 player1DB.set({
                     name: playerName,
@@ -151,12 +152,6 @@ function gameBtn(){
 };
 
 
-/* function charButtonHide(){
-    playerChoice.on("value", function(choice){
-        let oP = "#" + choice.val().otherPlayer;
-        $(oP).fadeOut(100);
-    })
-} */
 
 function connectionCounter(){
     var connectionsRef = database.ref("/connections");
@@ -239,17 +234,23 @@ function player(){
 
         if (play1){
             $("#player1").prop("disabled", true)
+            if(playerChar == "player2"){
+                $("#player1").css({"background-color": "red"})
+            }
         }else{
             $("#player1").prop("disabled", false)
             $("#player1").css({"background-color": "", "opacity": ""})
         }
         if(play2){
             $("#player2").prop("disabled", true)
+            if(playerChar == "player1"){
+                $("#player2").css({"background-color": "red"})
+            }
         }else{
             $("#player2").prop("disabled", false)
             $("#player2").css({"background-color": "", "opacity": ""})
         }
-    })
+    });
 };
 
 // get attack values from database and if both are attacks - call game logic function
@@ -262,12 +263,12 @@ function getAttacks(){
         if((player1Attack !== "x" && player2Attack == "x") || (player1Attack == "x" && player2Attack !== "x")  ) {
             $("#gameResults").empty();
             if (player1Attack == "x"){
-                $("#gameResults").html("<h1>Waiting on " + player1Name + "</h1>").fadeIn(400)
-            }else($("#gameResults").html("<h1>Waiting on " + player2Name + "</h1>").fadeIn(400))
+                $("#gameResults").html("<h4>Waiting on " + player1Name + "</h4>").fadeIn(400)
+            }else($("#gameResults").html("<h4>Waiting on " + player2Name + "</h4>").fadeIn(400))
         }
         if(player1Attack !== "x" && player2Attack !== "x" && playerPicked){
         rpsDB.off("value");
-        $("#gameResults").empty();
+        $("#gameResults h4").empty();
         gameLogic(player1Attack, player1Name , player2Attack, player2Name)
         }
     });
@@ -275,26 +276,35 @@ function getAttacks(){
 
 // review attack data and determin a winner of the game
 function gameLogic(player1Guess, player1Name, player2Guess, player2Name){
-    $("#gameResults").empty().hide();
+    $("#gameResults h4").empty();
+    if(playerChar === "player1"){
+        var x = player2Guess;
+    }else{var x = player1Guess};
+
     if (player1Guess === "rock" && player2Guess === "sissors" || player1Guess === "sissors" && 
         player2Guess === "paper" || player1Guess === "paper" && player2Guess === "rock") {
         console.log ("player 1 Wins"); 
-        var win1 = $("<h1>").text(player1Name + " Wins!")
+        // var win1 = $("<h1>").text(player1Name + " Wins!")
+        gameResultsDisplay(player1Name, x)
         scoreKeeper("player1");
     }
     else if (player1Guess === player2Guess){
         console.log ("you tie");
-        var win1 = $("<h1>").text("Its a Tie!");
+        // var win1 = $("<h1>").text("Its a Tie!");
         scoreKeeper("tie");
+
+        gameResultsDisplay(player1Name, x)
     }
     else  {
         console.log ("player 2 Wins");
-        var win1 = $("<h1>").text(player2Name + " Wins!");
+        gameResultsDisplay(player2Name, x)
+        // var win1 = $("<h4>").text(player2Name + " Wins!");
         scoreKeeper("player2");
+
     }
-    $("#gameResults").append(win1)
-    $("#gameResults").show().delay(2000).fadeOut(500)
-    
+    // $("#gameResults h4").hide().append(win1)
+    // $("#gameResults h4").show().delay(2000).fadeOut(500)
+
     // player1Attack;
     // player2Attack;
     player1DB.set({name: player1Name, attackDB: "x"});
@@ -305,6 +315,17 @@ function gameLogic(player1Guess, player1Name, player2Guess, player2Name){
         getAttacks();
     }, 1000);
 };
+
+function gameResultsDisplay(winnerName, pAttack){
+    // let otherAttack = $("<div class = 'otherAttack'>")
+    // otherAttack.append('<img class="attackImage" src="assets/images/' + pAttack + '-hand.jpg">')
+    // $("#gameResults").append(otherAttack);
+    $("#gameResults").html('<button type="button" class="btn btn-secondary btn-sm otherAttack"><img class="attackImage" src="assets/images/' + pAttack + '-hand.jpg"> </button>')
+    // $("#gameResults h4").hide().append(win1)
+    // $("#gameResults h4").show().delay(2000).fadeOut(500)
+    // var win1 = $("<h4>").text(winnerName + " Wins!")
+    // var win1 = $("<h4>").text("Its a Tie!");
+}
 
 // update scores and write to page and local storage
 function scoreKeeper(winner){
@@ -349,9 +370,14 @@ function chatUpdate(){
         let userName = chat.val().user;
         let chatT = chat.val().chatTextDB
         if (userName === playerName){
-            var message = $("<p>").text(chatT);
+            var text = $("<p>").text(chatT);
+            var message = $("<div>").append(text);
             message.addClass("myChat");
-        }else{var message = $("<p>").text(userName + ": " + chatT)}
+        }else{
+            var text = $("<p>").text(userName + ": " + chatT)
+            var message = $("<div>").append(text);
+            message.addClass("otherChat");
+        }
 
         $("#chatArea").prepend(message);
     });

@@ -23,15 +23,8 @@
   var loss = 0;
   var ties = 0;
 
-//   var ref = firebase.database().ref("rps/playerChoice/" + playerChar);
-//     ref.onDisconnect().set(false);
-
-
-  
-
   var playerName = "nobody";
   var playerChar;
-//   var otherPlayer;
   var playerPicked = false;
   var attackChoose = false;
   var loaded = false;
@@ -228,13 +221,29 @@ function getAttacks(){
 
 // pick player 1 or player 2
 function player(){
-    playerChoice.on("value",function(miles){
-        let play1 = miles.val().player1;
-        let play2 = miles.val().player2;
+    rpsDB.on("value",function(miles){
+        let play1 = miles.val().playerChoice.player1;
+        let play2 = miles.val().playerChoice.player2;
+        let play1Name = miles.val().player1.name;
+        let play2Name = miles.val().player2.name;
+
+        if (play1Name != "nobody"){
+            $("#player1Name").text(play1Name);
+        }else{$("#player1Name").empty()}
+
+        if (play2Name != "nobody"){
+            $("#player2Name").text(play2Name);
+        }else{$("#player2Name").empty()}
+
+        if (play1 && play2 && !playerPicked){
+            $("#clearPlayer").prop("disabled", true)
+        }else{
+            $("#clearPlayer").prop("disabled", false)
+        }
 
         if (play1){
             $("#player1").prop("disabled", true)
-            if(playerChar == "player2"){
+            if(playerChar == "player2" && playerPicked){
                 $("#player1").css({"background-color": "red"})
             }
         }else{
@@ -243,7 +252,7 @@ function player(){
         }
         if(play2){
             $("#player2").prop("disabled", true)
-            if(playerChar == "player1"){
+            if(playerChar == "player1" && playerPicked){
                 $("#player2").css({"background-color": "red"})
             }
         }else{
@@ -266,7 +275,7 @@ function getAttacks(){
                 $("#gameResults").html("<h4>Waiting on " + player1Name + "</h4>").fadeIn(400)
             }else($("#gameResults").html("<h4>Waiting on " + player2Name + "</h4>").fadeIn(400))
         }
-        if(player1Attack !== "x" && player2Attack !== "x" && playerPicked){
+        if(player1Attack !== "x" && player2Attack !== "x"){
         rpsDB.off("value");
         $("#gameResults h4").empty();
         gameLogic(player1Attack, player1Name , player2Attack, player2Name)
@@ -281,12 +290,14 @@ function gameLogic(player1Guess, player1Name, player2Guess, player2Name){
         var x = player2Guess;
     }else{var x = player1Guess};
 
-    if (player1Guess === "rock" && player2Guess === "sissors" || player1Guess === "sissors" && 
+    if (player1Guess === "rock" && player2Guess === "sissors" || player1Guess === "sissors" &&
         player2Guess === "paper" || player1Guess === "paper" && player2Guess === "rock") {
-        console.log ("player 1 Wins"); 
+        console.log("player 1 Wins");
         // var win1 = $("<h1>").text(player1Name + " Wins!")
         gameResultsDisplay(player1Name, x)
         scoreKeeper("player1");
+
+
     }
     else if (player1Guess === player2Guess){
         console.log ("you tie");
@@ -316,7 +327,7 @@ function gameLogic(player1Guess, player1Name, player2Guess, player2Name){
     }, 2000);
 };
 
-function gameResultsDisplay(winnerName, pAttack){
+function gameResultsDisplay(winnerName, pAttack, loserName, oAttack){
     // let otherAttack = $("<div class = 'otherAttack'>")
     // otherAttack.append('<img class="attackImage" src="assets/images/' + pAttack + '-hand.jpg">')
     $("#gameResults").empty().hide();
@@ -331,23 +342,25 @@ function gameResultsDisplay(winnerName, pAttack){
 }
 
 // update scores and write to page and local storage
-function scoreKeeper(winner){
-    if (winner === playerChar){
-        wins++
-        localStorage.setItem("userWins", wins);
-        $("#winCount").text(wins);
+function scoreKeeper(winner) {
+    if (playerPicked) {
+        if (winner === playerChar) {
+            wins++
+            localStorage.setItem("userWins", wins);
+            $("#winCount").text(wins);
+        }
+        else if (winner === "tie") {
+            ties++
+            localStorage.setItem("userTies", ties);
+            $("#tieCount").text(ties);
+
+        } else {
+            loss++
+            localStorage.setItem("userLoss", loss);
+            $("#lossCount").text(loss);
+        }
+        setStats();
     }
-    else if(winner === "tie"){
-        ties++
-        localStorage.setItem("userTies", ties);
-        $("#tieCount").text(ties);
-        
-    }else{
-        loss++
-        localStorage.setItem("userLoss", loss);
-        $("#lossCount").text(loss);
-    }
-    setStats();
 };
 // chat functions
 function chat(){

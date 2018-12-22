@@ -39,12 +39,14 @@
                     <div class="row">
                         <div class="col-4 playerButtons mb-2">
                             <button type="button" id="player1" value="player1" class="btn btn-secondary btn-sm charBtn">Player 1</button>
+                            <div id="player1Name" class="playerNameDiv">Test Name</div>
                         </div>
                         <div class="col-4 playerButtons mb-2">
                             <button type="button" id="clearPlayer" class="btn btn-dark btn-sm clearBtn">clear</button>
                         </div>
                         <div class="col-4 playerButtons mb-2">
                             <button type="button" id="player2" value="player2" class="btn btn-secondary btn-sm charBtn">Player 2</button>
+                            <div id="player2Name" class="playerNameDiv">Test Name</div>
                         </div>
                         <div class="col-12 attackButtons">
                             <button type="button" id="rockBtn" value="rock" class="btn btn-secondary btn-sm gameBtn" disabled><img class="attackImage" src="assets/images/rock-hand.jpg"> </button>
@@ -83,13 +85,13 @@
                 <div class="col-12">
                     <div id="watcherBox">
                         <p>
-                            <button class="btn btn-dark btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample"
-                                aria-expanded="false" aria-controls="collapseExample">
+                            <button class="btn btn-dark btn-sm" type="button" data-toggle="collapse" data-target="#statsTableDiv"
+                                aria-expanded="false" aria-controls="statsTableDiv">
                                 <i class="fas fa-eye"></i>
                                 <span id="watchers"></span>
                             </button>
                         </p>
-                        <div class="collapse" id="collapseExample">
+                        <div class="collapse" id="statsTableDiv">
                             <div class="card card-body">
                                 <table id="userTable" class="table table-sm" style="width:100%">
                                     <thead class="thead-dark">

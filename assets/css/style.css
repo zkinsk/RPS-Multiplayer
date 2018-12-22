@@ -1,8 +1,8 @@
 
 
-*{
-    /* border: 1px black solid; */
-}
+/* *{
+    border: 1px black solid;
+} */
 
 body {
     background-color: darkgoldenrod;
@@ -41,6 +41,9 @@ body {
 .playerButtons {
     text-align: center;
 }
+.playerNameDiv {
+    height: 20px;
+}
 .attackButtons {
     text-align: center;
 }
@@ -48,6 +51,7 @@ body {
     transition: all 0.5s;
 
 }
+
 .attackImage {
     width: 50px;
     height: 50px;
@@ -70,7 +74,7 @@ body {
 
 /* chat box css */
 #chatBox{
-    height: 200px;
+    height: 300px;
     width: 100%;
     overflow: hidden;
     /* background-color: #e9ecef; */
@@ -84,14 +88,17 @@ body {
     position: relative;
     background-color: hsl(206, 36%, 20%);
     overflow:auto;
-    height: 80%;
+    height: 250px;
 }
 #chatArea p {
     margin: 0;
 }
 .myChat {
+    margin-left: auto;
     text-align: right;
     margin-top: 1px;
+    margin-right: 3px;
+    max-width: 80%;
 }
 .myChat p {
     background-color: #8afe37;
@@ -102,7 +109,10 @@ body {
 }
 
 .otherChat {
-    margin-top: 1px
+    margin-left: 3px;
+    margin-right: auto;
+    margin-top: 1px;
+    max-width: 80%;
 
 }
 .otherChat p {
@@ -121,4 +131,7 @@ body {
 }
 table {
     text-align: center;
+}
+#statsTableDiv .card {
+    background-color: #d0980b;
 }

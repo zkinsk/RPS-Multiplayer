@@ -293,7 +293,7 @@ function gameLogic(player1Guess, player1Name, player2Guess, player2Name){
         // var win1 = $("<h1>").text("Its a Tie!");
         scoreKeeper("tie");
 
-        gameResultsDisplay(player1Name, x)
+        gameResultsDisplay("tie", x)
     }
     else  {
         console.log ("player 2 Wins");
@@ -313,18 +313,21 @@ function gameLogic(player1Guess, player1Name, player2Guess, player2Name){
     setTimeout(function(){
         $(".gameBtn").css("background-color", "")
         getAttacks();
-    }, 1000);
+    }, 2000);
 };
 
 function gameResultsDisplay(winnerName, pAttack){
     // let otherAttack = $("<div class = 'otherAttack'>")
     // otherAttack.append('<img class="attackImage" src="assets/images/' + pAttack + '-hand.jpg">')
-    // $("#gameResults").append(otherAttack);
+    $("#gameResults").empty().hide();
     $("#gameResults").html('<button type="button" class="btn btn-secondary btn-sm otherAttack"><img class="attackImage" src="assets/images/' + pAttack + '-hand.jpg"> </button>')
-    // $("#gameResults h4").hide().append(win1)
-    // $("#gameResults h4").show().delay(2000).fadeOut(500)
-    // var win1 = $("<h4>").text(winnerName + " Wins!")
-    // var win1 = $("<h4>").text("Its a Tie!");
+    if (winnerName == "tie"){
+        var win1 = $("<h4>").text("Its a Tie!");
+    }else{
+        var win1 = $("<h4>").text(winnerName + " Wins!")
+    }
+    $("#gameResults").append(win1);
+    $("#gameResults").show().delay(2000).fadeOut(500);
 }
 
 // update scores and write to page and local storage

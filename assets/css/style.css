@@ -60,8 +60,11 @@ body {
 
 }
 
-#gameResults {
-    height: 50px;
+#resultsBox {
+    height: 70px;
+}
+#gameResults img, #gameResults h4 {
+    display: inline-block;
 }
 
 

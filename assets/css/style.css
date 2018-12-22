@@ -67,6 +67,9 @@ body {
 #resultsBox {
     height: 70px;
 }
+#gameResults div {
+    text-align: center;
+}
 #gameResults img, #gameResults h4 {
     display: inline-block;
 }

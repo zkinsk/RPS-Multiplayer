@@ -287,14 +287,18 @@ function getAttacks(){
 function gameLogic(player1Guess, player1Name, player2Guess, player2Name){
     $("#gameResults h4").empty();
     if(playerChar === "player1"){
-        var x = player2Guess;
-    }else{var x = player1Guess};
+        var pG = player2Guess;
+        var oP = player1Guess
+    }else{
+        var pG = player1Guess
+        var oP = player2Guess
+    };
 
     if (player1Guess === "rock" && player2Guess === "sissors" || player1Guess === "sissors" &&
         player2Guess === "paper" || player1Guess === "paper" && player2Guess === "rock") {
         console.log("player 1 Wins");
         // var win1 = $("<h1>").text(player1Name + " Wins!")
-        gameResultsDisplay(player1Name, x)
+        gameResultsDisplay(player1Name, pG, player2Name, oP)
         scoreKeeper("player1");
 
 
@@ -304,11 +308,11 @@ function gameLogic(player1Guess, player1Name, player2Guess, player2Name){
         // var win1 = $("<h1>").text("Its a Tie!");
         scoreKeeper("tie");
 
-        gameResultsDisplay("tie", x)
+        gameResultsDisplay(player1Name, player1Guess, player2Name, player2Guess, "tie" )
     }
     else  {
         console.log ("player 2 Wins");
-        gameResultsDisplay(player2Name, x)
+        gameResultsDisplay(player2Name, pG, player1Name, oP)
         // var win1 = $("<h4>").text(player2Name + " Wins!");
         scoreKeeper("player2");
 
@@ -324,21 +328,46 @@ function gameLogic(player1Guess, player1Name, player2Guess, player2Name){
     setTimeout(function(){
         $(".gameBtn").css("background-color", "")
         getAttacks();
-    }, 2000);
+    }, 3000);
 };
 
-function gameResultsDisplay(winnerName, pAttack, loserName, oAttack){
+function gameResultsDisplay(winnerName, pAttack, loserName, oAttack, tie){
     // let otherAttack = $("<div class = 'otherAttack'>")
     // otherAttack.append('<img class="attackImage" src="assets/images/' + pAttack + '-hand.jpg">')
     $("#gameResults").empty().hide();
-    $("#gameResults").html('<button type="button" class="btn btn-secondary btn-sm otherAttack"><img class="attackImage" src="assets/images/' + pAttack + '-hand.jpg"> </button>')
-    if (winnerName == "tie"){
+    // var resultDiv = $("<div class='resultDiv'>");
+    var winDiv = $("<div class='col'>")
+    var winButton = $('<button type="button" class="btn btn-secondary btn-sm otherAttack"><img class="attackImage" src="assets/images/' + pAttack + '-hand.jpg"> </button>')
+    winDiv.append(winButton);
+    winDiv.append(winnerName);
+    $("#gameResults").append(winDiv);
+    // resultDiv.append(winDiv);
+
+    // var winButton = ('<button type="button" class="btn btn-secondary btn-sm otherAttack"><img class="attackImage" src="assets/images/' + pAttack + '-hand.jpg"> </button>')
+    // $("#gameResults").html('<button type="button" class="btn btn-secondary btn-sm otherAttack"><img class="attackImage" src="assets/images/' + pAttack + '-hand.jpg"> </button>')
+
+    if (!playerPicked){
+        var loseDiv = $("<div class='col'>")
+        var loseButton = $('<button type="button" class="btn btn-secondary btn-sm otherAttack"><img class="attackImage" src="assets/images/' + oAttack + '-hand.jpg"> </button>')
+        loseDiv.append(loseButton)
+        loseDiv.append(loserName)
+        // resultDiv.append(loseDiv);
+        $("#gameResults").append(loseDiv);
+    }
+
+    let resultText = $("<div class='col'>");
+    if (tie == "tie"){
         var win1 = $("<h4>").text("Its a Tie!");
     }else{
         var win1 = $("<h4>").text(winnerName + " Wins!")
     }
-    $("#gameResults").append(win1);
-    $("#gameResults").show().delay(2000).fadeOut(500);
+    resultText.append(win1)
+
+    // resultDiv.append(resultText)
+
+    $("#gameResults").append(resultText);
+    // $("#gameResults").show().delay(3000).fadeOut(500);
+    $("#gameResults").show();
 }
 
 // update scores and write to page and local storage

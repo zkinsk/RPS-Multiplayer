@@ -34,6 +34,7 @@
 //   var otherPlayer;
   var playerPicked = false;
   var attackChoose = false;
+  var loaded = false;
 
 //   choose name - 
 function buttonClick (){
@@ -338,17 +339,20 @@ function chat(){
     })
 };
 
-// updae chat box
+
+
+
 function chatUpdate(){
-    chatDB.on("value", function(chatText){
-        chatText.forEach(function(chat){
+    chatDB.on("child_added", function(chat){
+        console.log(chat)
         let userName = chat.val().user;
         let chatT = chat.val().chatTextDB
-        // console.log(userName);
-        // console.log(chatT);
-        let message = $("<p>").text(userName + ": " + chatT)
+        if (userName === playerName){
+            var message = $("<p>").text(chatT);
+            message.addClass("myChat");
+        }else{var message = $("<p>").text(userName + ": " + chatT)}
+
         $("#chatArea").prepend(message);
-        });
     });
 };
 

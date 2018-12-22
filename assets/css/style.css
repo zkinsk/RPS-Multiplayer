@@ -3,6 +3,10 @@
     margin: auto;
 
 }
+#userBox {
+    margin: auto;
+    text-align: center;
+}
 #userName {
     display: inline-block;
     /* margin-right: 1px; */
@@ -13,32 +17,49 @@
     top: -5px;
     left: 1px;
     /* transform: translate(-50%, -50%); */
-    transform: scale(0.650, 0.650);
+    transform: scale(0.500, 0.500);
 }
 .score {
     display: inline-block;
+    text-align: center;
+}
+#score, #userName {
+    text-align: center;
+}
+.playerButtons {
+    text-align: center;
 }
 
+
+/* chat box css */
 #chatBox{
-    background-color: lightgreen;
+    /* background-color: lightgreen; */
     height: 200px;
-    width: 400px;
+    width: 100%;
     overflow: hidden;
 }
 #chatArea{
+    background-color: lightgreen;
     overflow:auto;
     height: 70%;
 }
 #chatArea p {
     margin: 0;
 }
-
-#chatInput {
-    width: 70%
+.myChat {
+    text-align: right;
+    background-color: lightcoral;
 }
+
+/* #chatInput {
+    width: 100%;
+} */
 
 .container {
     display: none;
+}
+#watcherBox p {
+    text-align: center;
 }
 table {
     text-align: center;

@@ -85,6 +85,7 @@ function buttonClick (){
             $("#winCount").text(wins);
             $("#tieCount").text(ties);
             $("#lossCount").text(loss);
+            location.reload();
             setStats();
         }else{}
 

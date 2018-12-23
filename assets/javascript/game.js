@@ -125,6 +125,9 @@ function buttonClick (){
         $("#tieCount").text(ties);
         $("#lossCount").text(loss);
     });
+    $("#watcherBox button").click(function(){
+        $(this).toggleClass("btn-danger btn-dark")
+        $('body,html').animate({scrollTop: "210px"},1000)    })
 };
 
 // choose attack and send it to the database

@@ -105,7 +105,7 @@ function buttonClick (){
         attackChoose = false;
         $(".charBtn").css({"background-color": ""})
         $('.gameBtn').prop('disabled', true).css("background-color", "");
-        $("#gameResults h4").empty().hide();
+        $("#gameResults").empty();
         $(".gameBtn").off("click");
     });
 
@@ -334,10 +334,10 @@ function gameLogic(player1Guess, player1Name, player2Guess, player2Name){
 function gameResultsDisplay(winnerName, pAttack, loserName, oAttack, tie){
     // let otherAttack = $("<div class = 'otherAttack'>")
     // otherAttack.append('<img class="attackImage" src="assets/images/' + pAttack + '-hand.jpg">')
-    $("#gameResults").empty().hide();
+    $("#gameResults").empty();
     // var resultDiv = $("<div class='resultDiv'>");
-    var winDiv = $("<div class='col'>")
-    var winButton = $('<button type="button" class="btn btn-secondary btn-sm otherAttack"><img class="attackImage" src="assets/images/' + pAttack + '-hand.jpg"> </button>')
+    var winDiv = $("<div class='col-4 col-md-3'>")
+    var winButton = $('<button type="button" class="btn btn-secondary btn-sm otherAttack"><img class="attackImage" src="assets/images/' + pAttack + '-hand.jpg"> </button><br>')
     winDiv.append(winButton);
     winDiv.append(winnerName);
     $("#gameResults").append(winDiv);
@@ -347,15 +347,15 @@ function gameResultsDisplay(winnerName, pAttack, loserName, oAttack, tie){
     // $("#gameResults").html('<button type="button" class="btn btn-secondary btn-sm otherAttack"><img class="attackImage" src="assets/images/' + pAttack + '-hand.jpg"> </button>')
 
     if (!playerPicked){
-        var loseDiv = $("<div class='col'>")
-        var loseButton = $('<button type="button" class="btn btn-secondary btn-sm otherAttack"><img class="attackImage" src="assets/images/' + oAttack + '-hand.jpg"> </button>')
+        var loseDiv = $("<div class='col-4 col-md-3'>")
+        var loseButton = $('<button type="button" class="btn btn-secondary btn-sm otherAttack"><img class="attackImage" src="assets/images/' + oAttack + '-hand.jpg"> </button><br>')
         loseDiv.append(loseButton)
         loseDiv.append(loserName)
         // resultDiv.append(loseDiv);
         $("#gameResults").append(loseDiv);
     }
 
-    let resultText = $("<div class='col'>");
+    let resultText = $("<div class='col-4 align-self-center'>");
     if (tie == "tie"){
         var win1 = $("<h4>").text("Its a Tie!");
     }else{
@@ -366,8 +366,8 @@ function gameResultsDisplay(winnerName, pAttack, loserName, oAttack, tie){
     // resultDiv.append(resultText)
 
     $("#gameResults").append(resultText);
-    // $("#gameResults").show().delay(3000).fadeOut(500);
-    $("#gameResults").show();
+    $("#gameResults div").show().delay(3000).fadeOut(500);
+    // $("#gameResults div").show();
 }
 
 // update scores and write to page and local storage

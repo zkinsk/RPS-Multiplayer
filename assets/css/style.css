@@ -38,12 +38,21 @@ body {
 #score, #userName {
     text-align: center;
 }
+#gameArea{
+    background-color: hsl(206, 36%, 20%);;
+    border: 5px solid #212528;
+    border-radius: 3px;
+    color: #c4c0c0;
+}
+
+
 .playerButtons {
     text-align: center;
 }
 .playerNameDiv {
     height: 20px;
 }
+
 .attackButtons {
     text-align: center;
 }
@@ -64,8 +73,8 @@ body {
 
 }
 
-#resultsBox {
-    height: 70px;
+#gameResults {
+    height: 90px;
 }
 #gameResults div {
     text-align: center;
@@ -81,8 +90,11 @@ body {
     width: 100%;
     overflow: hidden;
     /* background-color: #e9ecef; */
-    background-color: #212528;
+    background-color: hsl(206, 36%, 20%);
     padding: 5px;
+    border: 5px solid #212528;
+    border-radius: 3px;
+    
 }
 #chatForm {
     border-bottom: solid black 1px
@@ -92,6 +104,7 @@ body {
     background-color: hsl(206, 36%, 20%);
     overflow:auto;
     height: 250px;
+    border-radius: 3px;
 }
 #chatArea p {
     margin: 0;

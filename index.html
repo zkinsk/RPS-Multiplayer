@@ -35,14 +35,14 @@
                 </div>
             </div>
             <div class="row justify-content-center">
-                <div class="col">
+                <div class="col mt-1" id="gameArea">
                     <div class="row">
                         <div class="col-4 playerButtons mb-2">
                             <button type="button" id="player1" value="player1" class="btn btn-secondary btn-sm charBtn">Player 1</button>
                             <div id="player1Name" class="playerNameDiv">Test Name</div>
                         </div>
                         <div class="col-4 playerButtons mb-2">
-                            <button type="button" id="clearPlayer" class="btn btn-dark btn-sm clearBtn">clear</button>
+                            <button type="button" id="clearPlayer" class="btn btn-info btn-sm clearBtn">clear</button>
                         </div>
                         <div class="col-4 playerButtons mb-2">
                             <button type="button" id="player2" value="player2" class="btn btn-secondary btn-sm charBtn">Player 2</button>
@@ -53,16 +53,8 @@
                             <button type="button" id="paperBtn" value="paper" class="btn btn-secondary btn-sm gameBtn" disabled><img class="attackImage" src="assets/images/paper-hand.jpg"> </button>
                             <button type="button" id="sissorsBtn" value="sissors" class="btn btn-secondary btn-sm gameBtn" disabled><img class="attackImage" src="assets/images/sissors-hand.jpg"> </button>
                         </div>
-                        <div class="col-12">
-                            <div id="gameArea">
-                                <div class="row" id="gameResults">
-                                    <!-- <div class="col">
-                                        <div id="resultsBox">
-                                            <div id="gameResults"></div>
-                                        </div>
-                                    </div> -->
-                                </div>
-
+                        <div class="col-12 my-1">
+                            <div class="row justify-content-center" id="gameResults">
                             </div>
                         </div>
                     </div>

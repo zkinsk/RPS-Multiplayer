@@ -3,7 +3,9 @@
 /* *{
     border: 1px black solid;
 } */
-
+* {
+    font-family: 'Source Sans Pro', sans-serif;
+}
 body {
     background-color: darkgoldenrod;
 }

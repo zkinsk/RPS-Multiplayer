@@ -29,7 +29,7 @@
   var attackChoose = false;
   var loaded = false;
 
-//   choose name - 
+//   sets a bunch of butten even listeners - Name entry - player 1 or 2  choser - clear player button - delete name button
 function buttonClick (){
     //   pick payer number
     $(".charBtn").on("click", function () {
@@ -83,10 +83,13 @@ function buttonClick (){
         }else{}
 
     })
-
+// clear player button
     $("#clearPlayer").click(function(){
         database.ref("/rps/playerChoice/" + playerChar).set(false);
         if (playerChar === "player1") {
+            playerChar;
+            playerPicked = false;
+            attackChoose = false;
             player1Chosen.set(false);
             player1DB.set({
                 name: "nobody",
@@ -94,19 +97,20 @@ function buttonClick (){
             })
             // otherPlayer = "player2"
         } else { 
+            playerChar;
+            playerPicked = false;
+            attackChoose = false;
             player2Chosen.set(false)
             player2DB.set({
                 name: "nobody",
                 attackDB: "x"
             })
         }
-        playerChar;
-        playerPicked = false;
-        attackChoose = false;
+   
         $(".charBtn").css({"background-color": ""})
         $('.gameBtn').prop('disabled', true).css("background-color", "");
         $("#gameResults").empty();
-        $(".gameBtn").off("click");
+        // $(".gameBtn").off("click");
     });
 
     // change user name - clears user stats and everything from local storage
@@ -145,7 +149,7 @@ function gameBtn(){
 };
 
 
-
+// Connection counter shown at class - It's kind of redundent now as I have player stats and could just count those children
 function connectionCounter(){
     var connectionsRef = database.ref("/connections");
     // '.info/connected' is a special location provided by Firebase that is updated every time
@@ -219,7 +223,7 @@ function getAttacks(){
 } */
 
 
-// pick player 1 or player 2
+// monitors database for when someone chooses player 1 or player 2
 function player(){
     rpsDB.on("value",function(miles){
         let play1 = miles.val().playerChoice.player1;
@@ -277,6 +281,7 @@ function getAttacks(){
         }
         if(player1Attack !== "x" && player2Attack !== "x"){
         rpsDB.off("value");
+        player();
         $("#gameResults h4").empty();
         gameLogic(player1Attack, player1Name , player2Attack, player2Name)
         }
@@ -331,6 +336,7 @@ function gameLogic(player1Guess, player1Name, player2Guess, player2Name){
     }, 3000);
 };
 
+// update the DOM with results of the attacks - shows both results for people logged in but not player
 function gameResultsDisplay(winnerName, pAttack, loserName, oAttack, tie){
     // let otherAttack = $("<div class = 'otherAttack'>")
     // otherAttack.append('<img class="attackImage" src="assets/images/' + pAttack + '-hand.jpg">')
@@ -391,6 +397,8 @@ function scoreKeeper(winner) {
         setStats();
     }
 };
+
+
 // chat functions
 function chat(){
   $("#chatButton").click(function(event){
@@ -408,9 +416,7 @@ function chat(){
     })
 };
 
-
-
-
+// update chat box with chat text as it is send to the database
 function chatUpdate(){
     chatDB.on("child_added", function(chat){
         console.log(chat)
@@ -430,6 +436,7 @@ function chatUpdate(){
     });
 };
 
+// on page load checks to see if you have a name and stats stored in local storage - if not it hides the game and asks for you to enter a name
 function nameCheck(){
     if (localStorage.getItem("userDB") !== null ){
         playerName = localStorage.getItem("userDB")
@@ -451,6 +458,7 @@ function nameCheck(){
 
 };
 
+// writes you stats to the database so they can be displayed inthe watcher list
 function setStats(){
     if (statID){
         playerStatsDB.child(statID).set({
@@ -470,11 +478,9 @@ function setStats(){
     } 
     var refresh = playerStatsDB.child(statID)
     refresh.onDisconnect().remove()
-    // statID.onDisconnect().remove();
-    
-    // trainDB.child(tK).remove();
 };
 
+// updates player stats shown in the watchers drop down list
 function playerStats(){
     playerStatsDB.on("value", function(upDate){
         $("tbody").empty();
@@ -488,6 +494,7 @@ function playerStats(){
 }
 
 
+// document on ready - launches all these functions when page is done loading
 $(document).ready(function(){
     nameCheck();
     chat();

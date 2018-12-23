@@ -118,10 +118,13 @@ body {
 }
 .myChat p {
     background-color: #8afe37;
-    padding: 5px;
+    padding: 0px 5px 0px 5px;
     border: 1px transparent solid;
     border-radius: 6px;
     display: inline-block;
+}
+.chatName {
+color: #dff3ff;
 }
 
 .otherChat {
@@ -133,7 +136,7 @@ body {
 }
 .otherChat p {
     background-color: #52b4ff;
-    padding: 5px;
+    padding:  0px 5px 0px 5px;
     border: 1px transparent solid;
     border-radius: 6px;
     display: inline-block;

@@ -430,7 +430,7 @@ function chatUpdate(){
             var message = $("<div>").append(text);
             message.addClass("myChat");
         }else{
-            var text = $("<p>").text(userName + ": " + chatT)
+            var text = $("<p>").html('<span class="chatName">' + userName + ': </span>' + chatT)
             var message = $("<div>").append(text);
             message.addClass("otherChat");
         }

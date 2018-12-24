@@ -132,22 +132,40 @@ function buttonClick (){
 };
 
 // choose attack and send it to the database
-function gameBtn(){
-    $(".gameBtn").on("click", function(){
-        if (!attackChoose){
+function gameBtn() {
+    $(".gameBtn").on("click", function () {
+        if (playerChar == "player1") {
+            player1DB.once("value", function (p1) {
+                var a = p1.val().attackDB
+                if (a == "x") {
+                    attackChoose = false
+                }
+
+            });
+        } else if (playerChar == "player2") {
+            player2DB.once("value", function (p2) {
+                var a = p2.val().attackDB
+                if (a == "x") {
+                    attackChoose = false
+                }
+
+            });
+        }
+        if (!attackChoose) {
             attackChoose = true;
             let attack = $(this).attr("value");
-            $(this).css({"background-color": "blue"})
-            if(playerChar == "player1"){
+            $(this).css({ "background-color": "blue" })
+            if (playerChar == "player1") {
                 player1DB.set({
                     name: playerName,
                     attackDB: attack
                 })
-            }else {player2DB.set({
-                name: playerName,
-                attackDB: attack
-            })
-        }
+            } else {
+                player2DB.set({
+                    name: playerName,
+                    attackDB: attack
+                })
+            }
         }
     })
 };

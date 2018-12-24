@@ -85,8 +85,8 @@ function buttonClick (){
     })
 // clear player button
     $("#clearPlayer").click(function(){
-        database.ref("/rps/playerChoice/" + playerChar).set(false);
         if (playerChar === "player1") {
+            database.ref("/rps/playerChoice/" + playerChar).set(false);
             playerChar;
             playerPicked = false;
             attackChoose = false;
@@ -96,7 +96,8 @@ function buttonClick (){
                 attackDB: "x"
             })
             // otherPlayer = "player2"
-        } else { 
+        } else if (playerChar === "player2") { 
+            database.ref("/rps/playerChoice/" + playerChar).set(false);
             playerChar;
             playerPicked = false;
             attackChoose = false;

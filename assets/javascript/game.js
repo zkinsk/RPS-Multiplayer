@@ -66,7 +66,7 @@ function buttonClick (){
         event.preventDefault();
         playerName = $("#playerName").val();
         $("#playerName").val("");
-        console.log("PayerName: " + playerName)
+        // console.log("PayerName: " + playerName)
         if (playerName != ""){
             $("#playerNameBox").hide();
             $("#overallGameBox").slideDown(200)
@@ -134,6 +134,7 @@ function buttonClick (){
 // choose attack and send it to the database
 function gameBtn() {
     $(".gameBtn").on("click", function () {
+        console.log("gmBtn Click: " + playerChar);
         if (playerChar == "player1") {
             player1DB.once("value", function (p1) {
                 var a = p1.val().attackDB
@@ -323,7 +324,7 @@ function gameLogic(player1Guess, player1Name, player2Guess, player2Name){
 
     if (player1Guess === "rock" && player2Guess === "sissors" || player1Guess === "sissors" &&
         player2Guess === "paper" || player1Guess === "paper" && player2Guess === "rock") {
-        console.log("player 1 Wins");
+        // console.log("player 1 Wins");
         // var win1 = $("<h1>").text(player1Name + " Wins!")
         gameResultsDisplay(player1Name, pG, player2Name, oP)
         scoreKeeper("player1");
@@ -331,14 +332,14 @@ function gameLogic(player1Guess, player1Name, player2Guess, player2Name){
 
     }
     else if (player1Guess === player2Guess){
-        console.log ("you tie");
+        // console.log ("you tie");
         // var win1 = $("<h1>").text("Its a Tie!");
         scoreKeeper("tie");
 
         gameResultsDisplay(player1Name, player1Guess, player2Name, player2Guess, "tie" )
     }
     else  {
-        console.log ("player 2 Wins");
+        // console.log ("player 2 Wins");
         gameResultsDisplay(player2Name, pG, player1Name, oP)
         // var win1 = $("<h4>").text(player2Name + " Wins!");
         scoreKeeper("player2");
@@ -425,9 +426,9 @@ function scoreKeeper(winner) {
 function chat(){
   $("#chatButton").click(function(event){
       event.preventDefault();
-      console.log("click");
+    //   console.log("click");
       let chatText = $("#chatInput").val()
-      console.log(chatText);
+    //   console.log(chatText);
       if (chatText != ""){
         chatDB.push({
             user: playerName,
@@ -441,7 +442,7 @@ function chat(){
 // update chat box with chat text as it is send to the database
 function chatUpdate(){
     chatDB.on("child_added", function(chat){
-        console.log(chat)
+        // console.log(chat)
         let userName = chat.val().user;
         let chatT = chat.val().chatTextDB
         if (userName === playerName){

@@ -306,6 +306,7 @@ function getAttacks(){
         rpsDB.off("value");
         player();
         $("#gameResults h4").empty();
+        $('.gameBtn').prop('disabled', true);
         gameLogic(player1Attack, player1Name , player2Attack, player2Name)
         }
     });
@@ -396,6 +397,9 @@ function gameResultsDisplay(winnerName, pAttack, loserName, oAttack, tie){
 
     $("#gameResults").append(resultText);
     $("#gameResults div").show().delay(3000).fadeOut(500);
+    setTimeout(function(){
+        $('.gameBtn').prop('disabled', false)
+    }, 3550);
     // $("#gameResults div").show();
 }
 

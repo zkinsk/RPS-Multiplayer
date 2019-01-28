@@ -1,11 +1,10 @@
 # RPS-Multiplayer
 
-**Multi-player game based on week 1 or 2 rock paper scissors game.**  
+**Multi-player rock paper scissors & social hangout.**  
 
-I have done my best to make it mobile responsive. It can easiy be played on any mobile device.  
+- Fully moblie responsive
+- Chat app built in
+- 2 Players fight it out, but everyone with the page open can see the results
+- Scores are persistent from one session to the next
 
-Two people can play at once, with any number of others who can observe the attacks. There is a drop down showing the names and stats of everyone currently connected to the site. Everyone can chat while they watch. 
-
-Your name and stats are persistent on page re-load, but if you delete your name it wipes all of your stats as well. 
-
-**Other than that, it's simple, rock smashes sissors, sissors cuts paper and paper covers rock.**
+**It's as simple as, rock smashes sissors, sissors cuts paper and paper covers rock.**
